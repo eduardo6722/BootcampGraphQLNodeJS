@@ -5,8 +5,19 @@ const users = [];
 
 const typeDefs = resolve(__dirname, "schema.graphql");
 const resolvers = {
+  // Resolver trivial
+  User: {
+    name: parent => {
+      return parent.name;
+    }
+  },
   Query: {
-    users: () => users
+    users: () => users,
+    findUser: (_, args) => {
+      const { name } = args.params;
+      const foundUsers = users.filter(item => item.name.includes(name));
+      return foundUsers;
+    }
   },
   Mutation: {
     createUser: (parent, args, context, info) => {

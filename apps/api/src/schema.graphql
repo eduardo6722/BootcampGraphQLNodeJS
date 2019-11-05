@@ -11,6 +11,11 @@ input UserInput {
 
 type Query {
   users: [User!]!
+  findUser(params: QueryUser): [User!]!
+}
+
+input QueryUser {
+  name: String!
 }
 
 type Mutation {
