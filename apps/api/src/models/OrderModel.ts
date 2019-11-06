@@ -1,6 +1,27 @@
 import { Schema, model } from "mongoose";
 import { OrderDocument } from "../types";
 
+const orderItemSchema = new Schema(
+  {
+    product: {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true
+    },
+    total: {
+      type: Number,
+      required: true
+    }
+  },
+  {
+    timestamps: true
+  }
+);
+
 const orderSchema = new Schema(
   {
     user: {
@@ -23,10 +44,12 @@ const orderSchema = new Schema(
         "DELIVERED"
       ],
       default: "WAITING_PAYMENT"
-    }
+    },
+    items: [orderItemSchema]
   },
   {
-    timestamps: true
+    timestamps: true,
+    useNestedStrict: true
   }
 );
 
